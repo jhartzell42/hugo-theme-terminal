@@ -13,14 +13,20 @@
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>{{ if eq  .Title  .Site.Title }}{{ .Site.Title }}{{ else }}{{ with .Title }}{{.}} on {{ end }}{{ .Site.Title }}{{ end }}</title>
+    <id>https://www.thecodedmessage.com/</id>
     <link href="{{ .Permalink }}" />
+    <link rel="self" href="https://www.thecodedmessage.com/index.xml" />
+    <updated>{{ now.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
+    <author>
+        <name>Jimmy Hartzell</name>
+    </author>
     {{ range $pages }}
     <entry>
       <title>{{ .Title }}</title>
-      <link>{{ .Permalink }}</link>
+      <link href="{{ .Permalink }}" />
+      <id>{{ .Permalink }}</id>
       <updated>{{ .Date.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</updated>
       {{ with .Site.Author.email }}<author>{{.}}{{ with $.Site.Author.name }} ({{.}}){{end}}</author>{{end}}
-      <guid>{{ .Permalink }}</guid>
       <summary type="html">{{ .Summary | html }}</summary>
       <content type="html">{{ .Content | html }}</content>
     </entry>
